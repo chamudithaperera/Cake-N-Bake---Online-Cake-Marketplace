@@ -3,11 +3,21 @@ import './Navbar.css';
 import { Link } from 'react-router-dom';
 import { IconButton, useMediaQuery } from '@mui/material';
 import { IoMenu } from "react-icons/io5";
+import { Avatar, Button } from '@mui/material';
+
 
 
 const Navbar = ({ isAddmin }) => {
     const isSmallScreen = useMediaQuery('(max-width:1024px)');
 const prodileMenuShow = location.pathname.includes('/profile') || location.pathname.includes('/admin/restaurants');
+const handleAvatarClick = () => {
+    if (auth.user.role === "ROLE_CUSTOMER") {
+        navigate("/profile");
+    } else {
+        navigate("/admin/restaurants/details");
+    }
+};
+
 
     return (
         <nav className="navbar">
@@ -39,7 +49,24 @@ const prodileMenuShow = location.pathname.includes('/profile') || location.pathn
 {auth?.user && <Link to="/orders" className="nav-link">Orders</Link>}
 
     </div>
-    <div className="nav-actions"></div>
+    <div className="nav-actions">
+        {auth?.user ? (
+    <IconButton className="nav-button" onClick={handleAvatarClick}>
+        <Avatar className="user-avatar">
+            {auth?.user?.fullName[0].toUpperCase()}
+        </Avatar>
+    </IconButton>
+) : (
+    <Button 
+        variant="contained" 
+        className="login-button"
+        onClick={() => navigate("/account/login")}
+    >
+        Login
+    </Button>
+)}
+
+    </div>
 </div>
 
             </div>

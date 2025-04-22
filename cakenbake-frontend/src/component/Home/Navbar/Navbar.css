@@ -92,3 +92,20 @@
 .nav-link:hover::after {
     width: 100%;
 }
+.login-button {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) !important;
+    color: white !important;
+    padding: 0.5rem 1.5rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    letter-spacing: 0.5px !important;
+}
+
+.user-avatar {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) !important;
+    color: var(--white) !important;
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 0.9rem !important;
+    box-shadow: var(--shadow-sm) !important;
+}
