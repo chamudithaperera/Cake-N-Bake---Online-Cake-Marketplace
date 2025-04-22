@@ -32,7 +32,13 @@ const prodileMenuShow = location.pathname.includes('/profile') || location.pathn
                     </Link>
                 </div>
                 <div className="navbar-right">
-    <div className="nav-links"></div>
+    <div className="nav-links">
+        <Link to="/" className="nav-link">Home</Link>
+<Link to="/featured-cakes" className="nav-link">Featured Cakes</Link>
+<Link to="/cake-shops" className="nav-link">Cake Shops</Link>
+{auth?.user && <Link to="/orders" className="nav-link">Orders</Link>}
+
+    </div>
     <div className="nav-actions"></div>
 </div>
 
