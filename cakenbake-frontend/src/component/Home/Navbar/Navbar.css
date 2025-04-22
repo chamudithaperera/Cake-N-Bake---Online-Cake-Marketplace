@@ -47,3 +47,6 @@
     color: var(--primary-color);
     font-weight: 800;
 }
+.menu-button {
+    color: var(--text-color) !important;
+}
