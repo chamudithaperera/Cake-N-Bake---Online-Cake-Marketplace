@@ -5,6 +5,8 @@
     background-color: var(--white);
     box-shadow: var(--shadow-sm);
     padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
     width: 100%;
 }
 
@@ -19,6 +21,10 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.menu-button {
+    color: var(--text-color) !important;
 }
 
 .logo-link {
@@ -47,15 +53,23 @@
     color: var(--primary-color);
     font-weight: 800;
 }
-.menu-button {
-    color: var(--text-color) !important;
+
+.logo-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: -2px;
 }
+
 .navbar-right {
     display: flex;
     align-items: center;
     gap: 2rem;
     padding-right: 1rem;
 }
+
 .nav-links {
     position: absolute;
     left: 50%;
@@ -92,6 +106,22 @@
 .nav-link:hover::after {
     width: 100%;
 }
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-button {
+    color: var(--text-color) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+}
+
 .login-button {
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) !important;
     color: white !important;
@@ -99,6 +129,20 @@
     font-weight: 500 !important;
     text-transform: none !important;
     letter-spacing: 0.5px !important;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md) !important;
+}
+
+.cart-button {
+    background-color: var(--light-gray) !important;
+    padding: 8px !important;
+}
+
+.cart-button:hover {
+    background-color: var(--border-color) !important;
 }
 
 .user-avatar {
@@ -109,27 +153,13 @@
     font-size: 0.9rem !important;
     box-shadow: var(--shadow-sm) !important;
 }
-.cart-button {
-    background-color: var(--light-gray) !important;
-    padding: 8px !important;
-}
 
-.cart-button:hover {
-    background-color: var(--border-color) !important;
-}
-.nav-button {
-    color: var(--text-color) !important;
-    transition: transform 0.3s ease !important;
-}
-
-.nav-button:hover {
-    transform: translateY(-2px);
-}
+/* Responsive styles */
 @media (max-width: 1024px) {
     .navbar-container {
         width: 100%;
     }
-
+    
     .logo-text {
         font-size: 1.5rem;
     }
@@ -143,7 +173,7 @@
     .navbar {
         padding: 0.75rem 0;
     }
-
+    
     .logo-text {
         font-size: 1.25rem;
     }
@@ -156,4 +186,4 @@
     .nav-actions {
         gap: 0.5rem;
     }
-}
+} 
