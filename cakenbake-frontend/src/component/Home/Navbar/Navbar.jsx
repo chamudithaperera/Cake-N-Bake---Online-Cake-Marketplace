@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { IconButton, useMediaQuery } from '@mui/material';
 import { IoMenu } from "react-icons/io5";
 import { Avatar, Button } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge } from '@mui/material';
+
 
 
 
@@ -17,6 +20,14 @@ const handleAvatarClick = () => {
         navigate("/admin/restaurants/details");
     }
 };
+const handleCart = () => {
+    if (auth.user) {
+        navigate("/cart");
+    } else {
+        navigate('account/login');
+    }
+};
+
 
 
     return (
@@ -65,6 +76,18 @@ const handleAvatarClick = () => {
         Login
     </Button>
 )}
+{!isAddmin && (
+    <IconButton className="nav-button cart-button" onClick={handleCart}>
+        <Badge 
+            color="primary" 
+            badgeContent={cart?.cartItems?.length}
+            className="cart-badge"
+        >
+            <ShoppingCartIcon />
+        </Badge>
+    </IconButton>
+)}
+
 
     </div>
 </div>

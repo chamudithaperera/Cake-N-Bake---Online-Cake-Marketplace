@@ -109,3 +109,11 @@
     font-size: 0.9rem !important;
     box-shadow: var(--shadow-sm) !important;
 }
+.cart-button {
+    background-color: var(--light-gray) !important;
+    padding: 8px !important;
+}
+
+.cart-button:hover {
+    background-color: var(--border-color) !important;
+}
