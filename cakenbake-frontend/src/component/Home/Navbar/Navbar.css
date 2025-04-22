@@ -50,3 +50,9 @@
 .menu-button {
     color: var(--text-color) !important;
 }
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-right: 1rem;
+}
