@@ -6,6 +6,10 @@ import { IoMenu } from "react-icons/io5";
 import { Avatar, Button } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -13,6 +17,10 @@ import { Badge } from '@mui/material';
 const Navbar = ({ isAddmin }) => {
     const isSmallScreen = useMediaQuery('(max-width:1024px)');
 const prodileMenuShow = location.pathname.includes('/profile') || location.pathname.includes('/admin/restaurants');
+const dispatch = useDispatch();
+const navigate = useNavigate();
+const { auth, cart } = useSelector(store => store);
+
 const handleAvatarClick = () => {
     if (auth.user.role === "ROLE_CUSTOMER") {
         navigate("/profile");
