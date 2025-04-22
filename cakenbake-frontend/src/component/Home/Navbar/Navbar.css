@@ -117,3 +117,11 @@
 .cart-button:hover {
     background-color: var(--border-color) !important;
 }
+.nav-button {
+    color: var(--text-color) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+}
