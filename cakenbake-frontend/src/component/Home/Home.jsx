@@ -3,7 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllRestaurantAction } from '../State/Restaurant/Action';
 import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, Grid, TextField, Container, Button } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import { styled } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -12,6 +15,16 @@ const Home = () => {
     const [selectedRestaurant, setSelectedRestaurant] = useState('');
     const [selectedRestaurantId, setSelectedRestaurantId] = useState('');
     const navigate = useNavigate();
+
+    const carouselRef = useRef(null);
+
+    const restaurantNameList = restaurants?.filter(item => item?.open).map(item => item?.name) || [];
+
+    const StyledAutocomplete = styled(Autocomplete)({
+        '& .MuiAutocomplete-endAdornment': {
+            display: 'none',
+        },
+    });
 
     useEffect(() => {
         const fetchData = () => {
@@ -48,7 +61,58 @@ const Home = () => {
 
     return (
         <Box sx={{ backgroundColor: '#ffffff', overflow: 'hidden' }}>
-           
+            <div className='hero-section'>
+                <section className='banner'>
+                    <div className='banner-content'>
+                        <p className='text-4xl md:text-5xl lg:text-6xl'>
+                            Discover Amazing Cakes
+                        </p>
+                        <p className='text-lg md:text-xl'>
+                            Find the perfect cake for your special moments
+                        </p>
+                    </div>
+                </section>
+
+                <Container maxWidth="lg">
+                    <div className='search-container'>
+                        <Grid container spacing={2} alignItems="center">
+                            <Grid item xs={12} md={9}>
+                                <StyledAutocomplete
+                                    id='restaurant-search'
+                                    options={restaurantNameList}
+                                    onChange={handleRestaurantChange}
+                                    value={selectedRestaurant}
+                                    freeSolo
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            placeholder='Search for cake shops near you...'
+                                            margin='normal'
+                                            variant='outlined'
+                                            fullWidth
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                startAdornment: <SearchIcon sx={{ color: '#666', mr: 1 }} />,
+                                                style: { backgroundColor: 'var(--light-gray)', borderRadius: 'var(--border-radius)' }
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={3}>
+                                <Button
+                                    variant='contained'
+                                    fullWidth
+                                    onClick={goToRestaurant}
+                                    sx={{ height: '54px' }}
+                                >
+                                    Find Cakes
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Container>
+            </div>
         </Box>
     );
 };
