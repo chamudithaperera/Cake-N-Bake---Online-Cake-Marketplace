@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Slider from 'react-slick';
 import CarouselItem from './CarouselItem';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 
-const MultiItemCarousel = ({ foods }) => {
+const MultiItemCarousel = forwardRef(({ foods }, ref) => {
     const settings = {
         dots: false,
         infinite: false,
@@ -41,7 +41,7 @@ const MultiItemCarousel = ({ foods }) => {
 
     return (
         <div className="relative px-2">
-            <Slider {...settings}>
+            <Slider ref={ref} {...settings}>
                 {foods?.map((item) => (
                     <CarouselItem
                         key={item.id}
@@ -54,6 +54,6 @@ const MultiItemCarousel = ({ foods }) => {
             </Slider>
         </div>
     );
-};
+});
 
 export default MultiItemCarousel;
