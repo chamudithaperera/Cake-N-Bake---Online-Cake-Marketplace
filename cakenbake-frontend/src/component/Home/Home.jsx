@@ -7,6 +7,11 @@ import { Box, Grid, TextField, Container, Button } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import MultiItemCarousel from './MultiItemCarousel';
+import RestaurantCard from '../Restaurant/RestaurantCard';
+import EventCard from '../Profile/EventCard';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -56,6 +61,20 @@ const Home = () => {
             navigate(`/restaurant/${selectedRestaurantId}`);
         } else {
             navigate('/account/login');
+        }
+    };
+
+    const handlePrevClick = () => {
+        const carousel = carouselRef.current;
+        if (carousel && carousel.slickPrev) {
+            carousel.slickPrev();
+        }
+    };
+
+    const handleNextClick = () => {
+        const carousel = carouselRef.current;
+        if (carousel && carousel.slickNext) {
+            carousel.slickNext();
         }
     };
 
@@ -112,6 +131,43 @@ const Home = () => {
                         </Grid>
                     </div>
                 </Container>
+            </div>
+
+            <div className='featured-section'>
+                <div className='container'>
+                    <h2 className='section-title'>Featured Cakes</h2>
+                    <div style={{ position: 'relative' }}>
+                        <button className='carousel-nav-button prev' onClick={handlePrevClick}>
+                            <ChevronLeftIcon />
+                        </button>
+                        <MultiItemCarousel ref={carouselRef} foods={restaurant?.foods} />
+                        <button className='carousel-nav-button next' onClick={handleNextClick}>
+                            <ChevronRightIcon />
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className='section-container'>
+                <div className='container'>
+                    <h2 className='section-title'>Popular Cake Shops</h2>
+                    <div className='card-grid'>
+                        {restaurant?.restaurants?.map((item) => (
+                            <RestaurantCard key={item?.id} item={item} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <div className='section-container'>
+                <div className='container'>
+                    <h2 className='section-title'>Special Events & Offers</h2>
+                    <div className='card-grid'>
+                        {restaurant?.restaurantsEvents?.map((item) => (
+                            <EventCard key={item?.id} event={item} />
+                        ))}
+                    </div>
+                </div>
             </div>
         </Box>
     );
