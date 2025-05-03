@@ -15,7 +15,17 @@ const UserProfile = () => {
 
     return (
         <div>
-            
+           <div>
+                <div>{user.name}</div>
+                <div>{user.email}</div>
+            </div>
+            <Button
+            startIcon={<LogoutRounded />}
+            onClick={handleLogout}
+            variant="outlined">
+            Logout
+            </Button>
+ 
         </div>
     );
 };
