@@ -10,8 +10,25 @@ const navItems = [
 
 const ProfileNavigation = () => {
     return (
-        <nav>
-        </nav>
-    );
+    <nav>
+        {navItems.map((item) => (
+            <NavLink
+                key={item.path}
+                to={`/profile${item.path}`}
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    textDecoration: isActive(item.path) ? 'underline' : 'none',
+                    margin: '8px 0',
+                }}
+            >
+                {item.icon}
+                {item.label}
+            </NavLink>
+        ))}
+    </nav>
+);
+
 };
 export default ProfileNavigation;
