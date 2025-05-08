@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { useEffect } from 'react';
+import { registerUser, logout } from '../State/Authentication/Action';
 
 const initialValues = {
   fullName: "",
@@ -26,9 +28,19 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const handleOnSubmit = (values) => {
+  dispatch(registerUser({ userData: values, navigate }));
+};
+
+useEffect(() => {
+  if (localStorage.getItem("jwt")) {
+    dispatch(logout());
+  }
+}, [dispatch]);
+
   return (
     <div>
-      <Formik initialValues={initialValues} onSubmit={() => {}} validationSchema={SignupSchema}>
+      <Formik initialValues={initialValues} onSubmit={handleOnSubmit} validationSchema={SignupSchema}>
         {({ errors, touched }) => (
           <Form>
             <Grid container spacing={2}>
