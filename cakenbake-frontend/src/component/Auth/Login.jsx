@@ -1,11 +1,20 @@
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import * as Yup from 'yup';
 
 const initialValues = {
   email: "",
   password: ""
 };
+
+const LoginSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Email required'),
+    password: Yup.string()
+      .required('Password required.')
+      .min(8, 'Password is too short - should be 8 chars minimum.')
+      .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
+});
 
 const Login = () => {
   const handleOnSubmit = (values) => {
@@ -14,7 +23,7 @@ const Login = () => {
 
   return (
     <div>
-      <Formik initialValues={initialValues} onSubmit={handleOnSubmit}>
+      <Formik initialValues={initialValues} onSubmit={handleOnSubmit} validationSchema={LoginSchema}>
         {() => (
           <Form>
             <Grid container spacing={2}>
@@ -28,6 +37,8 @@ const Login = () => {
                   label="Email"
                   fullWidth
                   variant="outlined"
+                  error={touched.email && !!errors.email}
+                  helperText={<ErrorMessage name="email" />}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -38,6 +49,8 @@ const Login = () => {
                   fullWidth
                   variant="outlined"
                   type="password"
+                  error={touched.password && !!errors.password}
+                  helperText={<ErrorMessage name="password" />}
                 />
               </Grid>
               <Grid item xs={12}>
