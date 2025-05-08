@@ -2,6 +2,9 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../State/Authentication/Action.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
   email: "",
@@ -17,9 +20,12 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const handleOnSubmit = (values) => {
-    console.log("Login attempt:", values);
-  };
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    const handleOnSubmit = (values) => {
+      dispatch(loginUser({ userData: values, navigate }));
+    };
 
   return (
     <div>
