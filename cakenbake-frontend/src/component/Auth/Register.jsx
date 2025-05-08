@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useEffect } from 'react';
 import { registerUser, logout } from '../State/Authentication/Action';
+import { Typography } from '@mui/material';
 
 const initialValues = {
   fullName: "",
@@ -87,6 +88,12 @@ useEffect(() => {
           </Form>
         )}
       </Formik>
+      <Typography variant="body2" align="center" sx={{ mt: 3 }}>
+  Already have an account?{" "}
+  <Button sx={{ color: 'blue' }} onClick={() => navigate("/account/login")}>
+    Login
+  </Button>
+</Typography>
     </div>
   );
 };
