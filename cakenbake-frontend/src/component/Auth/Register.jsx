@@ -4,6 +4,7 @@ import { Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const initialValues = {
   fullName: "",
@@ -49,6 +50,28 @@ const Register = () => {
                 <Field as={TextField} name="password" label="Password" fullWidth variant="outlined" type="password" />
               </Grid>
             </Grid>
+
+            <Grid item xs={12}>
+  <FormControl fullWidth>
+    <InputLabel id="role-simple-select-label">Role</InputLabel>
+    <Field
+      as={Select}
+      labelId="role-simple-select-label"
+      id="role-simple-select"
+      name="role"
+      label="Role"
+    >
+      <MenuItem value="ROLE_CUSTOMER">Customer</MenuItem>
+      <MenuItem value="ROLE_RESTAURANT_OWNER">Restaurant Owner</MenuItem>
+    </Field>
+  </FormControl>
+</Grid>
+
+<Grid item xs={12}>
+  <Button sx={{ mt: 2, padding: "1rem" }} variant="contained" type="submit" color="primary" fullWidth>
+    Register
+  </Button>
+</Grid>
           </Form>
         )}
       </Formik>
