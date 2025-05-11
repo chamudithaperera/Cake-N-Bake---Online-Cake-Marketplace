@@ -1,4 +1,3 @@
-// src/redux/user/authActions.js
 import axios from "axios";
 import {
   REGISTER_REQUEST,
@@ -7,8 +6,11 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILURE,
 } from "./ActionTypes";
-import { API_URL } from "../../config/api";
+import { API_URL, api } from "../../config/api";
 import Swal from "sweetalert2";
 
 export const registerUser = (reqData) => async (dispatch) => {
@@ -82,6 +84,24 @@ export const loginUser = (reqData) => async (dispatch) => {
     });
 
     dispatch({ type: REGISTER_FAILURE, payload: error });
+    console.log("error", error);
+  }
+};
+
+export const getUser = (jwt) => async (dispatch) => {
+  dispatch({ type: GET_USER_REQUEST });
+
+  try {
+    const { data } = await api.get(`/api/users/profile`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+
+    dispatch({ type: GET_USER_SUCCESS, payload: data });
+    console.log("User Profile", data);
+  } catch (error) {
+    dispatch({ type: GET_USER_FAILURE, payload: error });
     console.log("error", error);
   }
 };
