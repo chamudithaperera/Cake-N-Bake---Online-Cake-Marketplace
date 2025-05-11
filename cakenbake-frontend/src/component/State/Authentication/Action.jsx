@@ -9,6 +9,10 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
+  LOGOUT,
+  ADD_TO_FAVORITE_REQUEST,
+  ADD_TO_FAVORITE_SUCCESS,
+  ADD_TO_FAVORITE_FAILURE,
 } from "./ActionTypes";
 import { API_URL, api } from "../../config/api";
 import Swal from "sweetalert2";
@@ -102,6 +106,54 @@ export const getUser = (jwt) => async (dispatch) => {
     console.log("User Profile", data);
   } catch (error) {
     dispatch({ type: GET_USER_FAILURE, payload: error });
+    console.log("error", error);
+  }
+};
+
+export const logout = () => async (dispatch) => {
+  try {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "successfully logout",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    localStorage.clear();
+    dispatch({ type: LOGOUT });
+    console.log("Logout Success");
+  } catch (error) {
+    dispatch({ type: LOGIN_FAILURE, payload: error });
+    console.log("error", error);
+  }
+};
+
+export const addToFavorite = ({ restaurantId, jwt }) => async (dispatch) => {
+  dispatch({ type: ADD_TO_FAVORITE_REQUEST });
+
+  try {
+    const { data } = await api.put(
+      `/api/restaurants/${restaurantId}/add-favorites`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+
+    dispatch({ type: ADD_TO_FAVORITE_SUCCESS, payload: data });
+    console.log("Add Favorites To", data);
+  } catch (error) {
+    Swal.fire({
+      title: "unsuccessfully add",
+      timer: 1500,
+      icon: "error",
+      showConfirmButton: false,
+    });
+
+    dispatch({ type: ADD_TO_FAVORITE_FAILURE, payload: error });
     console.log("error", error);
   }
 };
