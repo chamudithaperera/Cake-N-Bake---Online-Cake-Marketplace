@@ -13,6 +13,9 @@ import {
   ADD_TO_FAVORITE_REQUEST,
   ADD_TO_FAVORITE_SUCCESS,
   ADD_TO_FAVORITE_FAILURE,
+  ADD_ADDRESS_REQUEST,
+  ADD_ADDRESS_SUCCESS,
+  ADD_ADDRESS_FAILURE,
 } from "./ActionTypes";
 import { API_URL, api } from "../../config/api";
 import Swal from "sweetalert2";
@@ -154,6 +157,36 @@ export const addToFavorite = ({ restaurantId, jwt }) => async (dispatch) => {
     });
 
     dispatch({ type: ADD_TO_FAVORITE_FAILURE, payload: error });
+    console.log("error", error);
+  }
+};
+
+export const addAddress = (reqData) => async (dispatch) => {
+  dispatch({ type: ADD_ADDRESS_REQUEST });
+
+  try {
+    const { data } = await api.post(
+      `/api/users/address`,
+      reqData.deliveryAddress,
+      {
+        headers: {
+          Authorization: `Bearer ${reqData.jwt}`,
+        },
+      }
+    );
+
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "address added successfully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    dispatch({ type: ADD_ADDRESS_SUCCESS, payload: data });
+    console.log("Add Address", data);
+  } catch (error) {
+    dispatch({ type: ADD_ADDRESS_FAILURE, payload: error });
     console.log("error", error);
   }
 };
