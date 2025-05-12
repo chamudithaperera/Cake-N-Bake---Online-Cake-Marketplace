@@ -1,10 +1,10 @@
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React from 'react';
-import * as Yup from 'yup';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../State/Authentication/Action.jsx';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup'; // Import Yup for validation schema
+import { loginUser, logout } from '../State/Authentication/Action.jsx';
 
 const initialValues = {
   email: "",
@@ -12,25 +12,31 @@ const initialValues = {
 };
 
 const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email required'),
-    password: Yup.string()
-      .required('Password required.')
-      .min(8, 'Password is too short - should be 8 chars minimum.')
-      .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
+  email: Yup.string().email('Invalid email').required('Email required'),
+  password: Yup.string()
+  .required('Password required.')
+  .min(8, 'Password is too short - should be 8 chars minimum.')
+  .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
 });
 
 const Login = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    
-    const handleOnSubmit = (values) => {
-      dispatch(loginUser({ userData: values, navigate }));
-    };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("jwt")) {
+      dispatch(logout());
+    }
+  }, [dispatch]);
+
+  const handleOnSubmit = (values) => {
+    dispatch(loginUser({ userData: values, navigate }));
+  };
 
   return (
     <div>
       <Formik initialValues={initialValues} onSubmit={handleOnSubmit} validationSchema={LoginSchema}>
-        {() => (
+        {({ errors, touched }) => (
           <Form>
             <Grid container spacing={2}>
               <Grid item xs={12} className='flex justify-center text-2xl font-semibold'>
@@ -68,6 +74,13 @@ const Login = () => {
           </Form>
         )}
       </Formik>
+
+      <Typography variant='body2' align='center' sx={{ mt: 3 }}>
+        Don't have an account?{" "}
+        <Button sx={{ color: 'blue' }} onClick={() => navigate("/account/register")}>
+          Register
+        </Button>
+      </Typography>
     </div>
   );
 };
