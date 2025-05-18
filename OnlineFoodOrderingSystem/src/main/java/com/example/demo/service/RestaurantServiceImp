@@ -44,3 +44,43 @@ public class RestaurantServiceImp implements RestaurantService {
 
         return restaurantRepository.save(restaurant);
     }
+
+    @Override
+    public Restaurant updateRestaurant(Long restaurantId, CreateRestaurantRequest updateRestaurant) throws Exception {
+
+        Restaurant restaurant = findRestaurantById(restaurantId);
+
+        if(restaurant.getCuisineType()!=null){
+            restaurant.setCuisineType(updateRestaurant.getCuisineType());
+        }
+
+        if(restaurant.getDescription()!=null){
+            restaurant.setDescription(updateRestaurant.getDescription());
+        }
+
+        if(restaurant.getName()!=null){
+            restaurant.setName(updateRestaurant.getName());
+        }
+
+        return restaurantRepository.save(restaurant);
+    }
+
+    @Override
+    public void deleteRestaurant(Long restaurantId) throws Exception {
+
+        Restaurant restaurant = findRestaurantById(restaurantId);
+
+        restaurantRepository.delete(restaurant);
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurant() {
+
+        return  restaurantRepository.findAll();
+    }
+
+    @Override
+    public List<Restaurant> searchRestaurant(String keyword) {
+
+        return restaurantRepository.findBySearchQuery(keyword);
+    }
