@@ -84,3 +84,26 @@ public class RestaurantServiceImp implements RestaurantService {
 
         return restaurantRepository.findBySearchQuery(keyword);
     }
+
+    @Override
+    public Restaurant findRestaurantById(Long id) throws Exception {
+
+        Optional <Restaurant> opt =restaurantRepository.findById(id);
+
+        if(opt.isEmpty()){
+            throw new Exception("Restaurant Not Found");
+        }
+        return opt.get();
+    }
+
+    @Override
+    public Restaurant getRestaurantByUserId(Long userId) throws Exception {
+
+        Restaurant restaurant= restaurantRepository.findByOwnerId(userId);
+
+        if(restaurant==null){
+
+            throw new Exception("Restaurant Not Found With Owner Id "+userId);
+        }
+        return restaurant;
+    }
