@@ -1,6 +1,7 @@
 package com.fast_food.controller;
 
 import com.fast_food.model.Event;
+import com.fast_food.service.UserService;
 import com.fast_food.service.EventService;
 import com.fast_food.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/")
 public class EventController {
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private RestaurantService restaurantService;
