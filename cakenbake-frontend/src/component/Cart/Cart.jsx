@@ -1,4 +1,15 @@
-
+import { Box, Button, Card, Divider, Grid, Modal, TextField } from '@mui/material'
+import { React, useEffect, useState } from 'react'
+import CartItem from './CartItem'
+import AddressCard from './AddressCard';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import { Formik, Field, ErrorMessage, Form } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrder, createPaymentLink } from '../State/Order/Action';
+import { useNavigate } from 'react-router-dom';
+import { addAddress, getUser } from '../State/Authentication/Action';
+import Swal from 'sweetalert2';
 
 export const style = {
     position: 'absolute',
@@ -86,7 +97,8 @@ function Cart() {
             }
         });
     }
-        const initialValues = {
+
+    const initialValues = {
         location: '',
         streetAddress: '',
         mobile: '',
@@ -140,3 +152,98 @@ function Cart() {
                     </div>
                 </section>
 
+                <Divider orientation='vertical' flexItem />
+
+                <section className='lg:w-[70%] flex justify-center px-5 pb-10 lg:pb-0'>
+                    <div>
+                        <h1 className='py-10 text-2xl font-semibold text-center'>Choose Delivery Address</h1>
+                        <div className='flex flex-wrap justify-center gap-5'>
+                            {auth?.address?.map(item => (
+                                <AddressCard key={item.id} item={item} showbtn={true} handleClose={handleClose} />
+                            ))}
+                            <Card className='flex w-64 gap-5 p-5'>
+                                <AddLocationIcon />
+                                <div className='space-y-3 text-gray-500'>
+                                    <h1 className='text-lg font-semibold text-white'>Add New Address</h1>
+                                    <Button variant='contained' fullWidth onClick={handleOpenAddresModal}>
+                                        Add
+                                    </Button>
+                                </div>
+                            </Card>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={handleOnSubmit}
+                    >
+                        <Form>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <h1 className='flex justify-center text-xl font-bold text-gray-400'>Add Address</h1>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Field
+                                        as={TextField}
+                                        name="location"
+                                        label="Location Type"
+                                        fullWidth
+                                        variant="outlined"
+                                        helperText={<ErrorMessage name="location" />}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Field
+                                        as={TextField}
+                                        name="streetAddress"
+                                        label="Address"
+                                        fullWidth
+                                        variant="outlined"
+                                        helperText={<ErrorMessage name="streetAddress" />}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Field
+                                        as={TextField}
+                                        name="mobile"
+                                        label="Mobile"
+                                        fullWidth
+                                        variant="outlined"
+                                        helperText={<ErrorMessage name="mobile" />}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Field
+                                        as={TextField}
+                                        name="city"
+                                        label="City"
+                                        fullWidth
+                                        variant="outlined"
+                                        helperText={<ErrorMessage name="city" />}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button fullWidth variant='contained' type='submit' color='primary'>
+                                        Add
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Form>
+                    </Formik>
+                </Box>
+            </Modal>
+        </>
+    );
+}
+
+export default Cart;
