@@ -8,6 +8,9 @@ import { createPaymentLink } from '../State/Order/Action';
 const { cart, auth } = useSelector(store => store);
 const dispatch = useDispatch();
 
+const showSelectButton = !location.pathname.includes('/profile/address');
+{showSelectButton && <Button variant='outlined' onClick={createOrderUsingSelectedAddress} fullWidth>Select</Button>}
+
 const createOrderUsingSelectedAddress = () => {
     if (cart.cartItems.length === 0) {
         Swal.fire({ icon: "question", text: "Cart is empty", timer: 2000, timerProgressBar: true, showConfirmButton: false });
