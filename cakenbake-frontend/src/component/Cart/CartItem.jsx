@@ -2,6 +2,33 @@ import { Chip, IconButton } from '@mui/material';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { findCart, removeCartItem, updateCartItem } from '../State/Cart/Action';
+import { useEffect, useState } from 'react';
+
+const navigate = useNavigate();
+const jwt = localStorage.getItem("jwt");
+const { auth, cart } = useSelector(store => store);
+const dispatch = useDispatch();
+const [updateTrigger, setUpdateTrigger] = useState(false);
+
+const handleUpdateCartItem = (value) => {
+    if (value === -1 && item.quantity === 1) handleRemoveCartItem();
+    const data = { cartItemId: item.id, quantity: item.quantity + value };
+    dispatch(updateCartItem({ data, jwt }));
+    dispatch(findCart(jwt));
+    setUpdateTrigger(prev => !prev);
+};
+
+const handleRemoveCartItem = () => {
+    dispatch(removeCartItem({ cartItemId: item.id, jwt: auth.jwt || jwt }));
+};
+
+useEffect(() => {
+    dispatch(findCart(jwt));
+}, [jwt, dispatch, updateTrigger]);
+
 
 const CartItem = ({ item }) => {
     return (
