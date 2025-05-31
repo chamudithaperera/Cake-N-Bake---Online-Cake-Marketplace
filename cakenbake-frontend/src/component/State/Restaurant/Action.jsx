@@ -25,7 +25,7 @@ export const getAllRestaurantAction = () => {
 
 }
 
-xport const getAllFoods = () => {
+export const getAllFoods = () => {
 
     return async (dispatch) => {
 
@@ -223,6 +223,7 @@ export const updateRestaurantStatus = ({ restaurantId, jwt }) => {
     }
 
 }
+
 
 export const createEvent = ({ data, jwt, restaurantId }) => {
     console.log(data)
@@ -426,4 +427,3 @@ export const getRestaurantCategory = ({ jwt, restaurantId }) => {
     }
 
 }
-
