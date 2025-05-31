@@ -366,3 +366,64 @@ export const getRestaurantEvents = ({ restaurantId, jwt }) => {
     }
 
 }
+
+export const creatCategoryAction = ({ reqData, jwt }) => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: CREATE_CATEGORY_REQUEST });
+        try {
+
+            const response = await api.post(`/api/admin/category`, reqData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`
+                    }
+                }
+            );
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "create category successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            dispatch({ type: CREATE_CATEGORY_SUCCESS, payload: response.data });
+            console.log("Create Category ", response.data);
+
+        } catch (error) {
+            dispatch({ type: CREATE_CATEGORY_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
+
+export const getRestaurantCategory = ({ jwt, restaurantId }) => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: GET_RESTAURANT_CATEGORY_REQUEST });
+        try {
+
+            const response = await api.get(`/api/category/restaurant/${restaurantId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`
+                    }
+                }
+            );
+
+            dispatch({ type: GET_RESTAURANT_CATEGORY_SUCCESS, payload: response.data });
+            console.log("Restaurant Categorys ", response.data);
+
+        } catch (error) {
+            dispatch({ type: GET_RESTAURANT_CATEGORY_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
+
