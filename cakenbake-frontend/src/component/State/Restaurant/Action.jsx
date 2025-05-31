@@ -224,4 +224,145 @@ export const updateRestaurantStatus = ({ restaurantId, jwt }) => {
 
 }
 
+export const createEvent = ({ data, jwt, restaurantId }) => {
+    console.log(data)
+    return async (dispatch) => {
 
+        dispatch({ type: CREATE_EVENTS_REQUEST });
+        try {
+
+            const response = await api.post(`/api/admin/event/create/${restaurantId}`, data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`
+                    }
+                }
+            );
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "create event successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            dispatch({ type: CREATE_EVENTS_SUCCESS, payload: response.data });
+            console.log("Create Event ", response.data);
+
+        } catch (error) {
+            dispatch({ type: CREATE_EVENTS_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
+
+
+export const getAllEvents = () => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: GET_ALL_EVENTS_REQUEST });
+        try {
+
+            const response = await api.get("/api/event/all",
+                {
+
+                }
+            );
+
+            dispatch({ type: GET_ALL_EVENTS_SUCCESS, payload: response.data });
+            console.log("All Events ", response.data);
+
+        } catch (error) {
+            dispatch({ type: GET_ALL_EVENTS_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
+
+export const getEventById = (jwt, restaurantId) => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: GET_RESTAURANT_EVENTS_REQUEST_BY_ID });
+        try {
+
+            const response = await api.get(`/api/event/id/${restaurantId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`
+                    }
+                }
+            );
+
+
+            dispatch({ type: GET_RESTAURANT_EVENTS_SUCCESS_BY_ID, payload: response.data });
+            console.log("Events by id", response.data);
+
+        } catch (error) {
+            dispatch({ type: GET_RESTAURANT_BY_USER_ID_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
+
+
+export const deleteEvent = ({ eventId, jwt }) => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: DELETE_EVENTS_REQUEST });
+        try {
+
+            const { response } = await api.delete(`/api/admin/event/${eventId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`
+                    }
+                }
+            );
+           
+            dispatch({ type: DELETE_EVENTS_SUCCESS, payload: eventId });
+           
+
+        } catch (error) {
+            dispatch({ type: DELETE_EVENTS_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
+
+
+export const getRestaurantEvents = ({ restaurantId, jwt }) => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: GET_RESTAURANTS_EVENTS_REQUEST });
+        try {
+
+            const { response } = await api.get(`/api/admin/events/restaurant${restaurantId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`
+                    }
+                }
+            );
+
+            dispatch({ type: GET_RESTAURANTS_EVENTS_SUCCESS, payload: response.data });
+            console.log("All ResturantEvents ", response.data);
+
+        } catch (error) {
+            dispatch({ type: GET_RESTAURANTS_EVENTS_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
