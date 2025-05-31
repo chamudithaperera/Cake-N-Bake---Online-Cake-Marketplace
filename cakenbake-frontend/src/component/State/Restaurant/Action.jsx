@@ -25,6 +25,30 @@ export const getAllRestaurantAction = () => {
 
 }
 
+xport const getAllFoods = () => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: GET_ALL_FOODS_REQUEST });
+        try {
+
+            const { data } = await api.get("/api/food/all",
+
+
+            );
+
+            dispatch({ type: GET_ALL_FOODS_SUCCESS, payload: data });
+            console.log("All Foods ", data);
+
+        } catch (error) {
+            dispatch({ type: GET_ALL_FOODS_FAILURE, payload: error });
+            console.log("Error ", error);
+        }
+
+    }
+
+}
+
 export const getRestaurantById = (reqData) => {
 
     return async (dispatch) => {
