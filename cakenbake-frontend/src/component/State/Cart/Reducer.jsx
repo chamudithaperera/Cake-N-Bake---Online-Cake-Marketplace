@@ -22,6 +22,15 @@ const cartReducer = (state = initialState, action) => {
 
 
             };
+        case actionTypes.FIND_CART_SUCCESS:
+        case actionTypes.CLEAR_CART_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                cart: action.payload,
+                cartItems: action.payload.item
+            };
+            
         case LOGOUT:
             localStorage.removeItem("jwt");
             return {
