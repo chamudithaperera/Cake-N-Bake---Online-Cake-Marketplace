@@ -30,7 +30,21 @@ const cartReducer = (state = initialState, action) => {
                 cart: action.payload,
                 cartItems: action.payload.item
             };
-            
+
+        case actionTypes.GET_ALL_CART_ITEMS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                cartItems: action.payload
+            };
+
+        case actionTypes.ADD_ITEM_TO_CART_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                cartItems: [action.payload, ...state.cartItems]
+            };
+
         case LOGOUT:
             localStorage.removeItem("jwt");
             return {
