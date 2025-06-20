@@ -1,4 +1,4 @@
-package com.fast_food.config;
+package com.example.demo.config;
 
 
 import io.jsonwebtoken.Claims;
