@@ -1,9 +1,9 @@
-package com.fast_food.service;
+package com.example.demo.service;
 
-import com.fast_food.model.Event;
-import com.fast_food.model.Restaurant;
-import com.fast_food.repository.EventRepository;
-import com.fast_food.repository.RestaurantRepository;
+import com.example.demo.model.Event;
+import com.example.demo.model.Restaurant;
+import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
