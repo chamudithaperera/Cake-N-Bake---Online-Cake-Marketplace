@@ -1,12 +1,12 @@
-package com.fast_food.service;
+package com.example.demo.service;
 
-import com.fast_food.dto.RestaurantDto;
-import com.fast_food.model.Address;
-import com.fast_food.model.Restaurant;
-import com.fast_food.model.User;
-import com.fast_food.repository.AddressRepository;
-import com.fast_food.repository.RestaurantRepository;
-import com.fast_food.repository.UserRepository;
+import com.example.demo.dto.RestaurantDto;
+import com.example.demo.model.Address;
+import com.example.demo.model.Restaurant;
+import com.example.demo.model.User;
+import com.example.demo.repository.AddressRepository;
+import com.example.demo.repository.RestaurantRepository;
+import com.example.demo.repository.UserRepository;
 import com.fast_food.request.CreateRestaurantRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
