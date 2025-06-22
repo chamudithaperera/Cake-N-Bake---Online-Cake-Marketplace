@@ -26,3 +26,36 @@ export const getIngredientsOfRestaurant = ({ id, jwt }) => {
     }
 
 }
+
+
+export const createIngredient = ({ data, jwt }) => {
+
+    return async (dispach) => {
+
+        dispach({ type: CREATE_INGREDIENT_REQUEST });
+
+        try {
+
+            const response = await api.post(`/api/admin/ingredients`, data, {
+
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            }
+            );
+            await Swal.fire({
+                title: "ingredients create succesfully",
+                position: "center",
+               timer:1500,
+               showConfirmButton:false,
+                icon: "success"
+              });
+            dispach({ type: CREATE_INGREDIENT_SUCCESS, payload: response.data });
+            console.log("Create ingredient", data);
+        } catch (error) {
+            dispach({ type: CREATE_INGREDIENT_FAILURE, payload: error });
+            console.log(error);
+        }
+    }
+
+}
