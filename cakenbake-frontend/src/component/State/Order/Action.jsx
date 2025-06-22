@@ -31,3 +31,55 @@ export const createOrder = (reqData) => {
         }
     }
 }
+
+export const createPaymentLink = (reqData) => {
+    return async (dispatch) => {
+        dispatch({ type: CREATE_PAYMENT_LINK_REQUEST });
+
+        try {
+            const { data } = await api.post(`/api/order/payment`,
+                {
+                    deliveryAddress: reqData.deliveryAddress,
+                    total: reqData.total,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${reqData.jwt}`
+                    }
+                }
+            );
+            
+            const address = data.address;
+            localStorage.setItem("selectedAddress", JSON.stringify(address));
+
+            // Create order directly instead of redirecting
+            const orderData = {
+                jwt: reqData.jwt,
+                restaurantId: data.restaurantId,
+                deliveryAddress: reqData.deliveryAddress
+            };
+            
+            await dispatch(createOrder(orderData));
+            
+            // Show success alert
+            Swal.fire({
+                icon: 'success',
+                title: 'Order Successful!',
+                text: 'Your order has been placed successfully.',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            });
+
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: CREATE_PAYMENT_LINK_FAILURE, payload: error });
+            Swal.fire({
+                icon: 'error',
+                title: 'Order Failed',
+                text: 'There was an error processing your order. Please try again.',
+                confirmButtonColor: '#3085d6'
+            });
+        }
+    }
+}
